@@ -33,7 +33,7 @@ export default function Home() {
           </div>
           <figure className="portrait">
             <div className="portrait-frame">
-              <img src={portrait} alt={`Portrait of ${profile.name}`} width={905} height={907} />
+              <img src={portrait} alt={`Portrait of ${profile.name}`} width={900} height={897} />
             </div>
             <figcaption className="portrait-badge">
               <span className="portrait-badge-dot" aria-hidden="true" />
