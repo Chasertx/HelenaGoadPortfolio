@@ -30,6 +30,8 @@ export default function Contact() {
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        // Don't leave the button stuck on "Sending…" if the service never answers.
+        signal: AbortSignal.timeout(20000),
         body: JSON.stringify({
           name: form.name,
           email: form.email,
