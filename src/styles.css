@@ -555,6 +555,20 @@ h3 {
   font-weight: 600;
 }
 
+.form-error {
+  color: #ffb4c4;
+}
+
+.form-error a {
+  text-decoration: underline;
+}
+
+.form .btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+
 /* Footer */
 .footer {
   border-top: 1px solid var(--border);

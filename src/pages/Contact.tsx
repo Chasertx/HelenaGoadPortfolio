@@ -9,23 +9,43 @@ interface FormState {
   message: string;
 }
 
+type Status = 'idle' | 'sending' | 'sent' | 'error';
+
 const empty: FormState = { name: '', email: '', subject: '', message: '' };
+
+// FormSubmit forwards submissions to Helena's inbox; no backend needed on GitHub Pages.
+const endpoint = `https://formsubmit.co/ajax/${contact.email}`;
 
 export default function Contact() {
   const [form, setForm] = useState<FormState>(empty);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>('idle');
 
   const update = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
-    const body = `${form.message}\n\n— ${form.name} (${form.email})`;
-    window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(
-      form.subject || `Hello from ${form.name}`,
-    )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
-    setForm(empty);
+    setStatus('sending');
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: form.subject || `Portfolio message from ${form.name}`,
+          _replyto: form.email,
+          _template: 'table',
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || String(data.success) !== 'true') throw new Error(data.message);
+      setStatus('sent');
+      setForm(empty);
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -60,12 +80,18 @@ export default function Contact() {
             <span>Message</span>
             <textarea name="message" rows={6} value={form.message} onChange={update} required />
           </label>
-          <button type="submit" className="btn btn-primary">
-            Send message
+          <button type="submit" className="btn btn-primary" disabled={status === 'sending'}>
+            {status === 'sending' ? 'Sending…' : 'Send message'}
           </button>
-          {sent && (
+          {status === 'sent' && (
             <p className="form-note" role="status">
-              Your email app should open with the message ready to send.
+              Thanks! Your message has been sent to Helena.
+            </p>
+          )}
+          {status === 'error' && (
+            <p className="form-note form-error" role="alert">
+              Something went wrong sending your message. Please email{' '}
+              <a href={`mailto:${contact.email}`}>{contact.email}</a> directly.
             </p>
           )}
         </form>
