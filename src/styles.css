@@ -227,6 +227,99 @@ h3 {
   margin-bottom: 1.25rem;
 }
 
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  margin-bottom: 3.5rem;
+}
+
+.hero-grid .hero-actions {
+  margin-bottom: 0;
+}
+
+.portrait {
+  position: relative;
+  margin: 0;
+  justify-self: center;
+  width: min(100%, 420px);
+}
+
+.portrait::before {
+  content: '';
+  position: absolute;
+  inset: 8% -8% -6% 8%;
+  border-radius: 999px 999px var(--radius) var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(109, 63, 192, 0.35), transparent 70%);
+  z-index: -1;
+}
+
+.portrait::after {
+  content: '';
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  background: var(--purple);
+  filter: blur(70px);
+  opacity: 0.55;
+  z-index: -2;
+}
+
+.portrait-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 999px 999px var(--radius) var(--radius);
+  padding: 6px;
+  background: linear-gradient(160deg, var(--lavender), var(--purple) 60%, var(--purple-deep));
+  box-shadow: var(--shadow);
+}
+
+.portrait-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  border-radius: inherit;
+}
+
+.portrait-frame::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 999px 999px calc(var(--radius) - 4px) calc(var(--radius) - 4px);
+  background: linear-gradient(180deg, transparent 60%, rgba(29, 16, 51, 0.55));
+  pointer-events: none;
+}
+
+.portrait-badge {
+  position: absolute;
+  left: -1.25rem;
+  bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(29, 16, 51, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.portrait-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lavender);
+  box-shadow: 0 0 0 4px rgba(201, 176, 255, 0.2);
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -586,6 +679,52 @@ h3 {
 
 /* Responsive */
 @media (max-width: 900px) {
+  /* Keep the portrait beside the heading; tagline and buttons span below. */
+  .hero-grid {
+    grid-template-columns: 1fr minmax(120px, 38%);
+    grid-template-areas:
+      'eyebrow eyebrow'
+      'title photo'
+      'lead lead'
+      'actions actions';
+    column-gap: clamp(1rem, 4vw, 2rem);
+    row-gap: 0;
+  }
+
+  .hero-copy {
+    display: contents;
+  }
+
+  .hero-copy .eyebrow {
+    grid-area: eyebrow;
+  }
+
+  .hero-copy h1 {
+    grid-area: title;
+    align-self: center;
+    margin-bottom: 0;
+  }
+
+  .hero-copy .lead {
+    grid-area: lead;
+    margin-top: 1.5rem;
+  }
+
+  .hero-copy .hero-actions {
+    grid-area: actions;
+  }
+
+  .portrait {
+    grid-area: photo;
+    width: 100%;
+  }
+
+  .portrait-badge {
+    left: 50%;
+    bottom: -0.9rem;
+    transform: translateX(-50%);
+  }
+
   .grid-2,
   .grid-3,
   .cta,
@@ -639,6 +778,17 @@ h3 {
 
   .form .btn {
     justify-self: stretch;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Too little room beside the heading; graduation date is in Education. */
+  .portrait-badge {
+    display: none;
+  }
+
+  .portrait::before {
+    inset: 6% -3% -3% 6%;
   }
 }
 

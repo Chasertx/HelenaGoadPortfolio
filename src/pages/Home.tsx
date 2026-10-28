@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import Timeline from '../components/Timeline';
 import ContactList from '../components/ContactList';
 import { accomplishments, education, experience, leadership, profile, skills } from '../data/resume';
+import portrait from '../assets/helena-portrait.jpg';
 
 const stats = [
   { value: '200', label: 'Guest events catered' },
-  { value: '$4K', label: 'Tabs closed independently' },
+  { value: '$3K', label: 'Tabs closed independently' },
   { value: '3.33', label: 'GPA on a 4.0 scale' },
   { value: 'CMA', label: 'Part 1 completed' },
 ];
@@ -14,18 +15,31 @@ export default function Home() {
   return (
     <>
       <section className="hero container">
-        <p className="eyebrow">{profile.headline}</p>
-        <h1>
-          Hi, I'm <span className="accent">{profile.name}</span>.
-        </h1>
-        <p className="lead">{profile.tagline}</p>
-        <div className="hero-actions">
-          <Link to="/contact" className="btn btn-primary">
-            Get in touch
-          </Link>
-          <Link to="/#experience" className="btn btn-ghost">
-            View experience
-          </Link>
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <p className="eyebrow">{profile.headline}</p>
+            <h1>
+              Hi, I'm <span className="accent">{profile.name}</span>.
+            </h1>
+            <p className="lead">{profile.tagline}</p>
+            <div className="hero-actions">
+              <Link to="/contact" className="btn btn-primary">
+                Get in touch
+              </Link>
+              <Link to="/#experience" className="btn btn-ghost">
+                View experience
+              </Link>
+            </div>
+          </div>
+          <figure className="portrait">
+            <div className="portrait-frame">
+              <img src={portrait} alt={`Portrait of ${profile.name}`} width={905} height={907} />
+            </div>
+            <figcaption className="portrait-badge">
+              <span className="portrait-badge-dot" aria-hidden="true" />
+              Graduating {education.graduation}
+            </figcaption>
+          </figure>
         </div>
         <dl className="stats">
           {stats.map((s) => (
