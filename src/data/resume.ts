@@ -72,7 +72,7 @@ export const experience: Role[] = [
       'Arrive prepared with all necessary attire 15 minutes before each shift begins; assist in ensuring the restaurant is immaculate and ready to receive guests.',
       'Facilitate seamless, unified coordination with coworkers when catering events of up to 200 people.',
       'Orchestrate teamwork between sections of up to 4 other servers during large functions.',
-      'Independently and successfully close tabs of up to $4,000; efficiently split checks up to 20 separate ways, and ensure payment for every item.',
+      'Independently and successfully close tabs of up to $3,000; efficiently split checks up to 20 separate ways, and ensure payment for every item.',
       'Instruct new employees on company culture/conduct, and assist them in becoming equal members of the team.',
       'Arrange closing duties for the team and delegate tasks fairly so that all staff leave at a reasonable time. Oversee that the restaurant is properly prepared for the next day of business.',
     ],
